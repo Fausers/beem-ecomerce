@@ -39,6 +39,7 @@ class OrderController extends Controller
         $order['price'] = $cart->total_price;
 
         $order = Order::create($order);
+        $order->shops()->attach($shops);
 
 //        To Customer
             $message = 'Oda yako inafanyiwa kazi. Muhudumu wetu wa mauzo atakupigia hivi punde. Asante na Karibu tena '.url('/');
@@ -49,7 +50,11 @@ class OrderController extends Controller
         $sms->beemSend($order->id,$phone,$message);
 
 //        To Shop
-            $message = 'New Order Alert. \n Phone '.$order->phone.' \n Name: '.$order->name.' \n Amount: '.$order->price;
+            $message = 'New Order Alert.
+Phone '.$order->phone.'
+Name: '.$order->name.'
+Amount: '.$order->price;
+
             $phone = '255785008133';
 
             $sms = new SMSController;
@@ -87,8 +92,8 @@ class OrderController extends Controller
         $order['company_ref'] = 'ct-'.$cart->id;
         $order['price'] = $cart->total_price;
 
-//        $order = Order::create($order);
-//        $order->shops()->attach($shops);
+        $order = Order::create($order);
+        $order->shops()->attach($shops);
 
         //        To Customer
             $message = 'Oda yako inafanyiwa kazi. Muhudumu wetu wa mauzo atakupigia hivi punde. Asante na Karibu tena '.url('/');
@@ -99,7 +104,11 @@ class OrderController extends Controller
          $sms->beemSend($order->id,$phone,$message);
 
 //        To Shop
-            $message = 'New Order Alert. Phone'.$order['phone'].' Name:'.$order['name'].' Amount:'.$order['price'];
+            $message = 'New Order Alert.
+Phone'.$order['phone'].'
+Name:'.$order['name'].'
+Amount:'.$order['price'];
+
             $phone = '255785008133';
 
             $sms = new SMSController;
