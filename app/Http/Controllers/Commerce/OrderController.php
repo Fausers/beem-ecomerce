@@ -15,51 +15,6 @@ use Illuminate\Support\Facades\Http;
 class OrderController extends Controller
 {
 
-    public function onlineOrder()
-    {
-//        return view('com.checkout.beem.sandbox');
-
-
-        $user = Auth::user();
-
-        $cart = $user->cart;
-        $data = view('com.checkout.dpo.endpoint',compact('cart'))->render();
-
-        $response = Http::withBody(
-            $data,'text/plain'
-        )->post('https://secure.3gdirectpay.com/API/v6/');
-
-        $xmlDoc = simplexml_load_string($response);
-
-        $code = simplexml_load_string($response);
-        if ($code === false) {
-          echo "Failed loading XML: ";
-          foreach(libxml_get_errors() as $error) {
-            echo "<br>", $error->message;
-          }
-        }
-
-        $code = simplexml_load_string($response);
-
-        $order['name'] = $user->address->name;
-        $order['phone'] = $user->address->phone;
-        $order['address'] = $user->address->region;
-        $order['email'] = $user->email;
-
-        $order['cart_id'] = $cart->id;
-        $order['coupon_id'] = $cart->coupon_id;
-        $order['user_id'] = $user->id;
-        $order['company_ref'] = 'ct-'.$cart->id;
-        $order['price'] = $cart->total_price;
-        $order['result_code'] = $code->Result;
-        $order['result_explanation'] = $code->ResultExplanation;
-        $order['trans_token'] = $code->TransToken;
-        $order['trans_ref'] = $code->TransRef;
-
-        $cd = $code->TransToken;
-
-        return redirect('https://secure.3gdirectpay.com/payv2.php?ID='.$cd);
-    }
 
     public function deliveryOrder()
     {
@@ -167,17 +122,14 @@ class OrderController extends Controller
          $sendSource = 2;
          $body = array('amount'=>$amount,'transaction_id'=>$transaction_id,'reference_number'=>$reference_number,'mobile'=>$mobile,'sendSource'=>$sendSource);
 
-//         return implode("|",$body);
-         $bdy = json_encode($body);
 
-          $uuul = $Url.'?'.http_build_query($body);
+         $uuul = $Url.'?'.http_build_query($body);
         // Setup cURL
         $ch = curl_init($uuul);
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-//        curl_setopt($ch, CURLOPT_URL, $Url.http_build_query($body) . "\n");
         curl_setopt_array($ch, array(
             CURLOPT_HTTPGET => TRUE,
             CURLOPT_RETURNTRANSFER => TRUE,
@@ -185,7 +137,6 @@ class OrderController extends Controller
                 'Authorization:Basic ' . base64_encode("$username:$password"),
                 'Content-Type: application/json'
             ),
-//            CURLOPT_POSTFIELDS => json_encode($body)
         ));
 
 

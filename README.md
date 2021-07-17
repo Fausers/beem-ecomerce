@@ -1,4 +1,4 @@
-### Installation Instructions
+### Installation Instructions Of the POS system
 1. Run ``` git clone https://github.com/Fausers/smes-pos.git```
 2. Create a MySQL database for the project
     * ```mysql -u root -p```, if using Vagrant: ```mysql -u homestead -psecret```
@@ -7,6 +7,15 @@
     * ```\q```
 3. From the projects root run `cp .env.example .env`
 4. Configure your `.env` file
+   
+### Create Folders
+```
+mkdir storage/framework
+mkdir storage/framework/cache
+mkdir storage/framework/sessions
+mkdir storage/framework/views
+```
+
 5. Run `composer update` from the projects root folder
 6. From the projects root folder run:
 ```
@@ -66,36 +75,21 @@ php artisan vendor:publish --tag=laravel2step
 |Shop One|Shop Owner|shopOne@manager.com|
 |Shop Two|Shop Owner|shopTwo@manager.com|
 
-##### Blocked Types Seed List
-
-|Slug|Name|
-|:------------|:------------|
-|email|E-mail|
-|ipAddress|IP Address|
-|domain|Domain Name|
-|user|User|
-|city|City|
-|state|State|
-|country|Country|
-|countryCode|Country Code|
-|continent|Continent|
-|region|Region|
-
-##### Blocked Items Seed List
-
-|Type|Value|Note|
-|:------------|:------------|:------------|
-|domain|test.com|Block all domains/emails @test.com|
-|domain|test.ca|Block all domains/emails @test.ca|
-|domain|fake.com|Block all domains/emails @fake.com|
-|domain|example.com|Block all domains/emails @example.com|
-|domain|mailinator.com|Block all domains/emails @mailinator.com|
 
 
 ### For the Ecommerce Installation Instructions
 1. Run ``` git clone https://github.com/Fausers/beem-ecommerce.git```
 2. From the projects root run `cp .env.example .env`
 3. Configure your `.env` file
+   
+### Create Folders
+```
+mkdir storage/framework
+mkdir storage/framework/cache`
+mkdir storage/framework/sessions
+mkdir storage/framework/views
+```
+
 4. Run `composer update` from the projects root folder
 5. From the projects root folder run:
 ```
@@ -120,8 +114,8 @@ php artisan vendor:publish --tag=laravel2step
 2. From the projects root folder run `npm run dev` or `npm run production`
   * You can watch assets with `npm run watch`
 
-#### Link Storage 
-1. From the projects root folder run `php artisan storage:link`
+#### Setup Storage 
+1. From app config file set `sstore` to the root url of the pos system
 
 #### Optionally Build Cache
 1. From the projects root folder run `php artisan config:cache`
