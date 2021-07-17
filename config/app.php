@@ -15,7 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'sstore' => env('STORAGE_URL', 'https://rona-mall.test/'),
+    'sstore' => env('STORAGE_URL', 'http://ecommerce.luxtechtz.com/'),
 
     /*
     |--------------------------------------------------------------------------
